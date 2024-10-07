@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 //pages
-import { TestingPage } from './components/Titles/TestingPage';
+import { TestingPage } from './components/pages/TestingPage';
 import RoleAndGuildPage from './components/pages/RoleAndGuild/RoleAndGuildPage';
 import PayBandSeparationPage from './components/pages/PayBandSeparation/PayBandSeparationPage';
 import WorkLifeBalancePage from './components/pages/WorkLifeBalance/WorkLifeBalancePage';

@@ -1,32 +1,28 @@
 import React from "react";
 
-export type QuestionBlockProps = {
+export type QuestionPageBlockProps = {
     question: string; // The question text to display
     questionType: 'Multiple Choice' | 'Slider'; // The type of the question (either Multiple Choice or Slider)
     options?: string[]; // Array of options for the multiple-choice question
     minSliderValue?: number; // Minimum value for the slider
-    onPrimaryButtonClick: () => void; // A function that takes no arguments and returns void (nothing)    
-    onSecondaryButtonClick?: () => void; // A function that takes no arguments and returns void (nothing)    
     maxSliderValue?: number; // Maximum value for the slider
     answer: string | number; // The current selected answer (could be a string or number)
     onAnswerChange: (answer: string | number) => void; // Callback function to handle answer changes
     testId:string,
   };
 
-export function QuestionBlock({
+export function QuestionPageBlock({
     question,
     questionType,
     options = [], 
     minSliderValue,
     maxSliderValue,
-    onPrimaryButtonClick,
-    onSecondaryButtonClick ,
     answer,
     onAnswerChange,
     testId,
-}: QuestionBlockProps) {
+}: QuestionPageBlockProps) {
   return (
-    <div style={{ padding: '16px', borderRadius: '8px', border: '1px solid #ccc' }}>
+    <div style={{ padding: '16px', borderRadius: '8px', }}>
       <h3>{question}</h3>
 
       {/* Render input based on the question type */}
@@ -61,9 +57,6 @@ export function QuestionBlock({
           <span>{answer}</span>
         </div>
       )}
-      <button
-      onClick={onPrimaryButtonClick}/>
-      
     </div>
   );
 }
