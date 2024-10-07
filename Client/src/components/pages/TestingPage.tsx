@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { QuestionPageBlock } from '../molecules/QuestionPageBlock';
 import PageNavigation from '../molecules/PageNavigation';
+import { useNavigate } from 'react-router-dom';
 
 
 export function TestingPage() {
+const navigate =useNavigate()
 
   const [selectedAnswer, setSelectedAnswer] = useState<string>('No guild selected yet');
   // const [sliderAnswer, setSliderAnswer] = useState<number>(5); // This is where we define the state for the slider
@@ -29,6 +31,8 @@ export function TestingPage() {
 // //  Handling page changes
 const handleBackClick = () => {
   console.log("Back button clicked!");
+  navigate('/');
+
 };
 
 const handleNextClick = () => {

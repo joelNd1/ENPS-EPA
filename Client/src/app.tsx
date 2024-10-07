@@ -10,6 +10,7 @@ import IncentivesPage from './components/pages/Incentives/IncentivesPage';
 import CareerDevelopmentPage from './components/pages/CareerDevelopment/CareerDevelopmentPage';
 
 //titles
+import TestingTitles from './components/Titles/TestingTitles';
 import RoleAndGuildTitle from './components/Titles/RoleAndGuild/RoleAndGuildTitle';
 import PayBandSeparationTitle from './components/Titles/PayBandSeparation/PayBandSeparationTitle';
 import WorkLifeBalanceTitle from './components/Titles/WorkLifeBalance/WorkLifeBalanceTitle';
@@ -21,7 +22,8 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         {/* Route for the functiional testing */}
-        <Route path="*" element={<TestingPage />} />
+        <Route path="*" element={<TestingTitles />} />
+        <Route path="/TestingPage" element={<TestingPage />} />
 
         {/* Routes for each section */}
         <Route path="/role-and-guild" element={<RoleAndGuildPage />} />
