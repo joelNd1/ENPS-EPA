@@ -10,9 +10,9 @@ type PageNavigationProps = {
 };
 
 export default function PageNavigation({
-  isBackButtonDisabled = false, // Default: Back button is enabled
+  isBackButtonDisabled = true, // Default: Back button is enabled
   isNextButtonDisabled = true,  // Default: Next button is disabled
-  isBackButtonHidden = false,   // Default: Back button is visible
+  isBackButtonHidden = true,   // Default: Back button is visible
   backButtonClickHandler,       // Back button click handler
   nextButtonClickHandler,       // Next button click handler
   wrapperMarginDisabled = false // Default: wrapper margin is enabled

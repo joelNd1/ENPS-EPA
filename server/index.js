@@ -1,74 +1,122 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
-const questionTrackerModel = require("./models/SurveyResponse.js");
+const SurveyResponse = require('./models/SurveyResponse'); // Model import
 const cors = require('cors');
 
+// Initialize the express app
+const app = express();
+
+// Middleware
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect('mongodb+srv://joelndlovu23:9N4ih6UwxadmEnqd@projectepa.txvbiso.mongodb.net/?retryWrites=true&w=majority&appName=ProjectEPA', {
+// Connect to MongoDB
+mongoose.connect('mongodb+srv://Joel:J3NWpmVt4raqNK8i@enps.blszc.mongodb.net/', {
     useNewUrlParser: true,
-});
+    useUnifiedTopology: true,
+})
+    .then(() => console.log('MongoDB connected successfully'))
+    .catch(err => console.error('MongoDB connection error:', err));
+
+// ------------------- CRUD Functions -------------------
 
 // CREATE - Insert a new survey response
 app.post("/insert", async (req, res) => {
-    const trainingType = req.body.trainingType;
-    const trainingDate = req.body.trainingDate;
-    const questionTracker = new questionTrackerModel({ DayType: trainingType, Date: trainingDate });
+    const {
+        employeeId,
+        roleGuild,
+        payBandSeparation,
+        workLifeBalance,
+        incentives,
+        careerDevelopment
+    } = req.body;
+
+    const surveyResponse = new SurveyResponse({
+        employeeId,
+        roleGuild,
+        payBandSeparation,
+        workLifeBalance,
+        incentives,
+        careerDevelopment
+    });
 
     try {
-        await questionTracker.save();
-        res.send("Inserted data");
+        await surveyResponse.save();
+        res.status(201).send("Survey response saved successfully");
     } catch (err) {
-        console.log(err);
+        console.error('Error saving survey response:', err);
+        res.status(500).send("Error saving survey response");
     }
 });
 
 // READ - Fetch all survey responses
 app.get("/read", async (req, res) => {
     try {
-        const sessions = await questionTrackerModel.find();
-        res.send(sessions);
+        const surveyResponses = await SurveyResponse.find();
+        res.send(surveyResponses);
     } catch (err) {
-        console.log(err);
-        res.status(500).send("Error fetching data");
+        console.error('Error fetching survey responses:', err);
+        res.status(500).send("Error fetching survey responses");
     }
 });
 
-// UPDATE - Update an existing survey response
-app.put("/update", async (req, res) => {
-    const newTrainingType = req.body.newTrainingType;
-    const id = req.body.id;
+// READ - Fetch a specific survey response by employeeId
+app.get("/read/:employeeId", async (req, res) => {
+    const { employeeId } = req.params;
 
     try {
-        const updatedTrainingType = await questionTrackerModel.findByIdAndUpdate(id, { DayType: newTrainingType });
+        const surveyResponse = await SurveyResponse.findOne({ employeeId });
+        if (!surveyResponse) {
+            return res.status(404).send("Survey response not found");
+        }
+        res.send(surveyResponse);
+    } catch (err) {
+        console.error('Error fetching survey response:', err);
+        res.status(500).send("Error fetching survey response");
+    }
+});
 
-        if (!updatedTrainingType) {
-            return res.status(404).send("Training type not found");
+// UPDATE - Update an existing survey response by _id
+app.put('/update/:id', async (req, res) => {
+    const { id } = req.params; // Get the document ID from the URL
+    const { guild } = req.body; // New data to update the document
+
+    try {
+        const updatedSurveyResponse = await SurveyResponse.findByIdAndUpdate(
+            id, // The document's _id
+            { 'roleGuild.guild': guild }, // The data to update
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedSurveyResponse) {
+            return res.status(404).send('Document not found');
         }
 
-        res.send("Training type updated successfully");
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Error updating training type");
+        res.status(200).send('Survey response updated successfully');
+    } catch (error) {
+        console.error('Error updating survey response:', error);
+        res.status(500).send('Error updating survey response');
     }
 });
 
 // DELETE - Remove a survey response by ID
 app.delete("/delete/:id", async (req, res) => {
-    const id = req.params.id;
+    const { id } = req.params;
 
     try {
-        await questionTrackerModel.findByIdAndRemove(id).exec();
-        res.send("Deleted successfully");
+        const deletedResponse = await SurveyResponse.findByIdAndRemove(id);
+        if (!deletedResponse) {
+            return res.status(404).send("Survey response not found");
+        }
+        res.send("Survey response deleted successfully");
     } catch (err) {
-        console.log(err);
-        res.status(500).send("Error deleting data");
+        console.error('Error deleting survey response:', err);
+        res.status(500).send("Error deleting survey response");
     }
 });
 
-app.listen(3001, () => {
-    console.log("Server is running perfectly on port 3001...");
+// Start the server
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}...`);
 });
-
