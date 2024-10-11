@@ -77,27 +77,33 @@ app.get("/read/:employeeId", async (req, res) => {
 });
 
 // UPDATE - Update an existing survey response by _id
-app.put('/update/:id', async (req, res) => {
-    const { id } = req.params; // Get the document ID from the URL
-    const { guild } = req.body; // New data to update the document
-
+app.put('/update/:employeeId', async (req, res) => {
+    const { employeeId } = req.params; // Extract employeeId from the URL
+    const updateFields = req.body; // Extract the fields to update from the request body
+  
+    console.log(`Updating survey for employeeId: ${employeeId}`);
+    console.log('Fields to update:', updateFields); // Debugging output
+  
     try {
-        const updatedSurveyResponse = await SurveyResponse.findByIdAndUpdate(
-            id, // The document's _id
-            { 'roleGuild.guild': guild }, // The data to update
-            { new: true } // Return the updated document
-        );
-
-        if (!updatedSurveyResponse) {
-            return res.status(404).send('Document not found');
-        }
-
-        res.status(200).send('Survey response updated successfully');
+      // Use Mongoose to update only the fields provided in the request body
+      const updatedSurveyResponse = await SurveyResponse.findOneAndUpdate(
+        { employeeId: employeeId }, // Find document by employeeId
+        updateFields,               // The fields to update
+        { new: true }               // Return the updated document
+      );
+  
+      if (!updatedSurveyResponse) {
+        console.error(`No survey response found for employeeId: ${employeeId}`);
+        return res.status(404).send('Survey response not found');
+      }
+  
+      res.status(200).json({ message: 'Survey response updated successfully', updatedSurveyResponse });
     } catch (error) {
-        console.error('Error updating survey response:', error);
-        res.status(500).send('Error updating survey response');
+      console.error('Error updating survey response:', error);
+      res.status(500).send('Internal Server Error');
     }
-});
+  });
+  
 
 // DELETE - Remove a survey response by ID
 app.delete("/delete/:id", async (req, res) => {

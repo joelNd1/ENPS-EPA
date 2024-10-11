@@ -28,7 +28,7 @@ export function TestingPage() {
     
     if (idFromURL) {
       setEmployeeId(idFromURL); // Set employeeId from URL
-      console.log("Employee ID:", idFromURL); // Log employeeId to the console
+      console.log("Employee ID:", idFromURL);
     } else {
       console.error("Employee ID not found in URL");
     }
@@ -41,29 +41,48 @@ export function TestingPage() {
 
   // Function to handle the next button click and PUT request
   const handleNextClick = async () => {
-    setIsSubmitting(true);
+    setIsSubmitting(true);  // Disable the button while the request is in progress
     
     try {
       // Make PUT request to update the guild for the employeeId
       const response = await axios.put(`http://localhost:3001/update/${employeeId}`, {      
-        'roleGuild.guild': selectedAnswer, // Update the guild field in roleGuild
+        roleGuild: {
+          guild: selectedAnswer // Update the guild field in roleGuild
+        }
       });
       console.log('PUT successful:', response.data);
 
-      // Navigate to the next page
-      navigate(`/next-page?employeeId=${employeeId}`);
+      // Navigate to the next pagers
+      navigate(`/`);
     } catch (error) {
-      console.error('Error making PUT request:', error);
+      console.error('Error updating guild:', error);
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false);  
     }
   };
 
+  const handleBackClick = async () => {
+    try {
+      // Send a DELETE request to the backend to remove the document by employeeId
+      const response = await axios.delete(`http://localhost:3001/delete/${employeeId}`);
+      
+      console.log('Document deleted successfully:', response.data);
+         navigate(`/`);
+
+    } catch (error) {
+      console.error('Error deleting document:', error);
+    }
+  
+  };
+
+  // Disable the next button if the answer is invalid or while submitting
   const isNextButtonDisabled = selectedAnswer === 'No guild selected yet' || isSubmitting;
 
   return (
     <div style={{ padding: '20px' }}>
       <h1>Testing Page</h1>
+
+      {/* Question Block for Guild Selection */}
       <QuestionPageBlock
         question="Which department or guild are you currently in?"
         questionType="Multiple Choice"
@@ -72,15 +91,20 @@ export function TestingPage() {
         onAnswerChange={handleAnswerChange}
         testId="Testing MultiQuestion component"
       />
+
+      {/* Display the selected answers */}
       <div style={{ marginTop: '20px' }}>
         <h3>Your selected guild: {selectedAnswer || 'No guild selected yet'}</h3>
         <h3>Employee ID: {employeeId}</h3> {/* Display the employee ID */}
       </div>
+
+      {/* Page Navigation */}
       <PageNavigation
         isBackButtonDisabled={false}
         isNextButtonDisabled={isNextButtonDisabled}
-        isBackButtonHidden={true}
+        isBackButtonHidden={false}
         nextButtonClickHandler={handleNextClick}
+        backButtonClickHandler={handleBackClick}
       />
     </div>
   );

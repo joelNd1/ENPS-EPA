@@ -3,9 +3,7 @@ const Schema = mongoose.Schema;
 
 const surveyResponseSchema = new Schema({
   employeeId: { type: String, required: true, unique: true },
-  consent: { type: Boolean, required: true, default: false }, // New field to track consent
   roleGuild: {
-    role: { type: String },
     guild: { type: String }
   },
   payBandSeparation: {
