@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 import { QuestionPageBlock } from '../molecules/QuestionPageBlock/QuestionPageBlock';
 import PageNavigation from '../molecules/PageNavigation/PageNavigation';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -7,25 +7,102 @@ import { useNavigate, useLocation } from 'react-router-dom';
 export function TestingPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  
-  const [selectedAnswer, setSelectedAnswer] = useState<string>('No guild selected yet');
-  const [employeeId, setEmployeeId] = useState<string>(''); // State for employee ID
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  // Multiple-choice options
-  const testOptions = [
-    'Architecture and Design',
-    'Data and Analytics Engineering',
-    'Software Engineering',
-    'Leadership Team',
-    'Quality Assurance and Testing',
+  const [answers, setAnswers] = useState<Record<string, any>>({});
+  const [employeeId, setEmployeeId] = useState<string>(''); 
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0); // Track current question index
+
+  // Define questions list similar to the surveyResponseSchema
+  const questions: {
+    key: string;
+    question: string;
+    questionType: 'Multiple Choice' | 'Slider';
+    options?: string[];
+    minSliderValue?: number;
+    maxSliderValue?: number;
+  }[] = [
+    {
+      key: 'roleGuild.guild',
+      question: 'Which department or guild are you currently in?',
+      questionType: 'Multiple Choice',
+      options: [
+        'Architecture and Design',
+        'Data and Analytics Engineering',
+        'Software Engineering',
+        'Leadership Team',
+        'Quality Assurance and Testing',
+      ],
+    },
+    {
+      key: 'payBandSeparation.satisfactionWithPay',
+      question: 'How satisfied are you with your pay?',
+      questionType: 'Slider',
+      minSliderValue: 1,
+      maxSliderValue: 5,
+    },
+    {
+      key: 'payBandSeparation.payReflectsEffort',
+      question: 'Does your pay reflect your effort?',
+      questionType: 'Slider',
+      minSliderValue: 1,
+      maxSliderValue: 5,
+    },
+    {
+      key: 'workLifeBalance.workLifeBalanceRating',
+      question: 'How would you rate your overall work/life balance?',
+      questionType: 'Slider',
+      minSliderValue: 1,
+      maxSliderValue: 5,
+    },
+    {
+      key: 'workLifeBalance.companySupportForBalance',
+      question: 'Does the company provide sufficient support for work/life balance?',
+      questionType: 'Slider',
+      minSliderValue: 1,
+      maxSliderValue: 5,
+    },
+    {
+      key: 'workLifeBalance.workloadManagement',
+      question: 'How effectively do you manage your workload?',
+      questionType: 'Slider',
+      minSliderValue: 1,
+      maxSliderValue: 5,
+    },
+    {
+      key: 'workLifeBalance.roleFlexibility',
+      question: 'How flexible is your role in terms of adjusting work hours?',
+      questionType: 'Slider',
+      minSliderValue: 1,
+      maxSliderValue: 5,
+    },
+    {
+      key: 'incentives.usesAXAMax',
+      question: 'Do you use AXA Max benefits?',
+      questionType: 'Multiple Choice',
+      options: ['Yes', 'No'],
+    },
+    {
+      key: 'careerDevelopment.careerDevelopmentSatisfaction',
+      question: 'How satisfied are you with the career development opportunities provided by the company?',
+      questionType: 'Slider',
+      minSliderValue: 1,
+      maxSliderValue: 5,
+    },
+    {
+      key: 'careerDevelopment.resourcesForProfessionalGrowth',
+      question: 'Are you satisfied with the resources provided for your professional growth?',
+      questionType: 'Slider',
+      minSliderValue: 1,
+      maxSliderValue: 5,
+    },
   ];
 
   // Extract employeeId from URL when the component mounts
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const idFromURL = params.get('employeeId');
-    
+
     if (idFromURL) {
       setEmployeeId(idFromURL); // Set employeeId from URL
       console.log("Employee ID:", idFromURL);
@@ -34,73 +111,79 @@ export function TestingPage() {
     }
   }, [location]);
 
-  // Function to handle the answer change
-  const handleAnswerChange = (newAnswer: string | number) => {
-    setSelectedAnswer(newAnswer as string);
+  // Function to handle answer change for dynamic questions
+  const handleAnswerChange = (key: string, value: any) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
   };
 
-  // Function to handle the next button click and PUT request
-  const handleNextClick = async () => {
-    setIsSubmitting(true);  // Disable the button while the request is in progress
-    
+  // Function to handle the next button click
+  const handleNextClick = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      handleSubmit(); // If last question, submit the form
+    }
+  };
+
+  // Function to handle the back button click
+  const handleBackClick = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    } else {
+      // Optionally handle behavior when the back button is pressed on the first page
+      console.log('This is the first question.');
+    }
+  };
+
+  // Function to handle the form submission
+  const handleSubmit = async () => {
+    setIsSubmitting(true); // Disable buttons while submitting
+
     try {
-      // Make PUT request to update the guild for the employeeId
-      const response = await axios.put(`http://localhost:3001/update/${employeeId}`, {      
-        roleGuild: {
-          guild: selectedAnswer // Update the guild field in roleGuild
-        }
-      });
+      // Make PUT request to update the responses for the employeeId
+      const response = await axios.put(`http://localhost:3001/update/${employeeId}`, answers);
       console.log('PUT successful:', response.data);
 
-      // Navigate to the next pagers
-      navigate(`/`);
+      // Navigate to a thank you or confirmation page
+      navigate(`/thank-you`);
     } catch (error) {
-      console.error('Error updating guild:', error);
+      console.error('Error updating survey responses:', error);
     } finally {
-      setIsSubmitting(false);  
+      setIsSubmitting(false);
     }
   };
 
-  const handleBackClick = async () => {
-    try {
-      // Send a DELETE request to the backend to remove the document by employeeId
-      const response = await axios.delete(`http://localhost:3001/delete/${employeeId}`);
-      
-      console.log('Document deleted successfully:', response.data);
-         navigate(`/`);
-
-    } catch (error) {
-      console.error('Error deleting document:', error);
-    }
-  
-  };
-
-  // Disable the next button if the answer is invalid or while submitting
-  const isNextButtonDisabled = selectedAnswer === 'No guild selected yet' || isSubmitting;
+  // Get the current question
+  const currentQuestion = questions[currentQuestionIndex];
+  const isNextButtonDisabled = isSubmitting || !answers[currentQuestion.key];
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>Testing Page</h1>
+      <h1>Survey Page {currentQuestionIndex + 1} of {questions.length}</h1>
 
-      {/* Question Block for Guild Selection */}
+      {/* Render the current question */}
       <QuestionPageBlock
-        question="Which department or guild are you currently in?"
-        questionType="Multiple Choice"
-        options={testOptions}
-        answer={selectedAnswer}
-        onAnswerChange={handleAnswerChange}
-        testId="Testing MultiQuestion component"
+        question={currentQuestion.question}
+        questionType={currentQuestion.questionType}
+        options={currentQuestion.options}
+        minSliderValue={currentQuestion.minSliderValue}
+        maxSliderValue={currentQuestion.maxSliderValue}
+        answer={answers[currentQuestion.key]}
+        onAnswerChange={(value) => handleAnswerChange(currentQuestion.key, value)}
+        testId={`question-${currentQuestionIndex}`}
       />
 
-      {/* Display the selected answers */}
+      {/* Display the employee ID */}
       <div style={{ marginTop: '20px' }}>
-        <h3>Your selected guild: {selectedAnswer || 'No guild selected yet'}</h3>
-        <h3>Employee ID: {employeeId}</h3> {/* Display the employee ID */}
+        <h3>Employee ID: {employeeId}</h3>
       </div>
 
       {/* Page Navigation */}
       <PageNavigation
-        isBackButtonDisabled={false}
+        isBackButtonDisabled={currentQuestionIndex === 0}
         isNextButtonDisabled={isNextButtonDisabled}
         isBackButtonHidden={false}
         nextButtonClickHandler={handleNextClick}
@@ -109,3 +192,5 @@ export function TestingPage() {
     </div>
   );
 }
+
+export default TestingPage;

@@ -6,23 +6,27 @@ type PageNavigationProps = {
   isBackButtonHidden?: boolean;   // Controls if the Back button is hidden
   backButtonClickHandler?: () => void; // Function to handle Back button click
   nextButtonClickHandler?: () => void; // Function to handle Next button click
-  wrapperMarginDisabled?: boolean;     // Option to disable wrapper margin
+  wrapperMarginDisabled?: boolean;     
+  nextButtonText?: string;      
+  backButtonText?: string;             
 };
 
 export default function PageNavigation({
-  isBackButtonDisabled = true, // Default: Back button is enabled
-  isNextButtonDisabled = true,  // Default: Next button is disabled
-  isBackButtonHidden = true,   // Default: Back button is visible
-  backButtonClickHandler,       // Back button click handler
-  nextButtonClickHandler,       // Next button click handler
-  wrapperMarginDisabled = false // Default: wrapper margin is enabled
+  isBackButtonDisabled = true,
+  isNextButtonDisabled = true,
+  isBackButtonHidden = true,
+  backButtonClickHandler,
+  nextButtonClickHandler,
+  wrapperMarginDisabled = false,
+  nextButtonText = "Next",          // Default text for Next button
+  backButtonText = "Back",          // Default text for Back button
 }: PageNavigationProps) {
   return (
     <div
       data-testid="Page-Navigation"
       style={{
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: isBackButtonHidden ? "flex-end" : "space-between", // Adjust alignment based on whether the Back button is hidden
         margin: wrapperMarginDisabled ? "0" : "20px 0", // Add margin unless disabled
       }}
     >
@@ -33,25 +37,26 @@ export default function PageNavigation({
           disabled={isBackButtonDisabled} // Disable the button if isBackButtonDisabled is true
           onClick={backButtonClickHandler} // Call the back button handler on click
           style={{
-            backgroundColor: isBackButtonDisabled ? "#ccc" : "#007bff", // Disabled styling for back button
+            backgroundColor: isBackButtonDisabled ? "#ccc" : "ff4400", 
             cursor: isBackButtonDisabled ? "not-allowed" : "pointer",   // Change cursor based on disabled state
             padding: "10px 20px",
             borderRadius: "4px",
             border: "none",
-            color: "#fff",
+            color: "#ffffff",
+            marginRight: "10px",
           }}
         >
-          Back
+          {backButtonText}
         </button>
       )}
 
       {/* Render the Next button */}
       <button
         data-testid="Next-Button"
-        disabled={isNextButtonDisabled} // Disable the Next button based on isNextButtonDisabled prop
-        onClick={nextButtonClickHandler} // Call the next button handler on click
+        disabled={isNextButtonDisabled} 
+        onClick={nextButtonClickHandler} 
         style={{
-          backgroundColor: isNextButtonDisabled ? "#ccc" : "#007bff", // Disabled styling for next button
+          backgroundColor: isNextButtonDisabled ? "#ccc" : "#ff4400", // Disabled styling for next button
           cursor: isNextButtonDisabled ? "not-allowed" : "pointer",   // Change cursor based on disabled state
           padding: "10px 20px",
           borderRadius: "4px",
@@ -59,7 +64,7 @@ export default function PageNavigation({
           color: "#fff",
         }}
       >
-        Next
+        {nextButtonText}
       </button>
     </div>
   );
