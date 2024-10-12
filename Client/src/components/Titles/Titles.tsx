@@ -1,12 +1,12 @@
 import { ReactComponent as Cyclist } from '../../assets/Img/Cyclist.svg';
-import PageNavigation from '../molecules/PageNavigation/PageNavigation';
-import { TitlePageBlock } from '../molecules/TitlePageBlock/TitlePageBlock';
+import PageNavigation from '../molecules/QuestionNavigation/QuestionNavigation';
+import { TitleBlock } from '../molecules/TitleBlock/TitleBlock';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function TestingTitle() {
+export default function Title() {
     const [employeeId, setEmployeeId] = useState<string>(''); // State for employee ID
     const navigate = useNavigate();
     const location = useLocation();
@@ -55,7 +55,7 @@ export default function TestingTitle() {
           setEmployeeId(generatedId);
 
           // Navigate to the next page, passing the employeeId
-          navigate(`/TestingPage?employeeId=${generatedId}`);
+          navigate(`/Questions?employeeId=${generatedId}`);
 
         } catch (error) {
           console.error('Error saving survey response:', error);
@@ -63,8 +63,8 @@ export default function TestingTitle() {
       };
 
     return (
-        <div>
-            <TitlePageBlock
+        <div >
+            <TitleBlock
                 image={<Cyclist />}
                 title='Lorem ipsum dolor sit amet'
                 description='Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.'

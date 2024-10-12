@@ -1,18 +1,18 @@
 import React, { ReactNode } from "react";
 
-export type TitlePageBlockProps = {
+export type TitleBlockProps = {
     image: ReactNode
     title: string; 
     description: String,
     testId:string,
   };
 
-  export function TitlePageBlock({
+  export function TitleBlock({
     image,
     title,
     description = '', // Default value for description if not provided
     testId,
-  }: TitlePageBlockProps) {
+  }: TitleBlockProps) {
     return (
       <div data-testid={testId}> {/* Assign testId to the div */}
         {image}

@@ -1,6 +1,6 @@
 import React from "react";
 
-type PageNavigationProps = {
+type QuestionNavigationProps = {
   isBackButtonDisabled?: boolean; // Controls if the Back button is disabled
   isNextButtonDisabled: boolean;  // Controls if the Next button is disabled
   isBackButtonHidden?: boolean;   // Controls if the Back button is hidden
@@ -11,7 +11,7 @@ type PageNavigationProps = {
   backButtonText?: string;             
 };
 
-export default function PageNavigation({
+export default function QuestionNavigation({
   isBackButtonDisabled = true,
   isNextButtonDisabled = true,
   isBackButtonHidden = true,
@@ -20,7 +20,7 @@ export default function PageNavigation({
   wrapperMarginDisabled = false,
   nextButtonText = "Next",          // Default text for Next button
   backButtonText = "Back",          // Default text for Back button
-}: PageNavigationProps) {
+}: QuestionNavigationProps) {
   return (
     <div
       data-testid="Page-Navigation"

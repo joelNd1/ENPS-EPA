@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { QuestionPageBlock } from '../molecules/QuestionPageBlock/QuestionPageBlock';
-import PageNavigation from '../molecules/PageNavigation/PageNavigation';
+import { QuestionBlock } from '../molecules/QuestionBlock/QuestionBlock';
+import QuestionNavigation from '../molecules/QuestionNavigation/QuestionNavigation';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-export function TestingPage() {
+export function Questions() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -165,7 +165,7 @@ export function TestingPage() {
       <h1>Survey Page {currentQuestionIndex + 1} of {questions.length}</h1>
 
       {/* Render the current question */}
-      <QuestionPageBlock
+      <QuestionBlock
         question={currentQuestion.question}
         questionType={currentQuestion.questionType}
         options={currentQuestion.options}
@@ -182,7 +182,7 @@ export function TestingPage() {
       </div>
 
       {/* Page Navigation */}
-      <PageNavigation
+      <QuestionNavigation
         isBackButtonDisabled={currentQuestionIndex === 0}
         isNextButtonDisabled={isNextButtonDisabled}
         isBackButtonHidden={false}
@@ -193,4 +193,4 @@ export function TestingPage() {
   );
 }
 
-export default TestingPage;
+export default Questions;

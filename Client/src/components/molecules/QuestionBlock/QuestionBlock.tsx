@@ -1,6 +1,6 @@
 import React from "react";
 
-export type QuestionPageBlockProps = {
+export type QuestionBlockProps = {
     question: string; // The question text to display
     questionType: 'Multiple Choice' | 'Slider'; // The type of the question (either Multiple Choice or Slider)
     options?: string[]; // Array of options for the multiple-choice question
@@ -11,7 +11,7 @@ export type QuestionPageBlockProps = {
     testId:string,
   };
 
-export function QuestionPageBlock({
+export function QuestionBlock({
     question,
     questionType,
     options = [], 
@@ -20,7 +20,7 @@ export function QuestionPageBlock({
     answer,
     onAnswerChange,
     testId,
-}: QuestionPageBlockProps) {
+}: QuestionBlockProps) {
   return (
     <div style={{ padding: '16px', borderRadius: '8px', }}>
       <h3>{question}</h3>
