@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { QuestionBlock } from '../molecules/QuestionBlock/QuestionBlock';
-import QuestionNavigation from '../molecules/QuestionNavigation/QuestionNavigation';
+import QuestionBlock from '../../molecules/QuestionBlock/QuestionBlock';
+import Navigation from '../../molecules/NavigationBlock/Navigation';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export function Questions() {
@@ -112,7 +112,7 @@ export function Questions() {
   }, [location]);
 
   // Function to handle answer change for dynamic questions
-  const handleAnswerChange = (key: string, value: any) => {
+  const handleAnswerChange = (key: string, value: string | number) => {
     setAnswers((prev) => ({
       ...prev,
       [key]: value,
@@ -132,9 +132,6 @@ export function Questions() {
   const handleBackClick = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
-    } else {
-      // Optionally handle behavior when the back button is pressed on the first page
-      console.log('This is the first question.');
     }
   };
 
@@ -161,7 +158,9 @@ export function Questions() {
   const isNextButtonDisabled = isSubmitting || !answers[currentQuestion.key];
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '20px', backgroundColor:'#F0F0F0'
+
+    }}>
       <h1>Survey Page {currentQuestionIndex + 1} of {questions.length}</h1>
 
       {/* Render the current question */}
@@ -176,13 +175,13 @@ export function Questions() {
         testId={`question-${currentQuestionIndex}`}
       />
 
-      {/* Display the employee ID */}
+      {/* Display the employee ID
       <div style={{ marginTop: '20px' }}>
         <h3>Employee ID: {employeeId}</h3>
-      </div>
+      </div> */}
 
       {/* Page Navigation */}
-      <QuestionNavigation
+      <Navigation
         isBackButtonDisabled={currentQuestionIndex === 0}
         isNextButtonDisabled={isNextButtonDisabled}
         isBackButtonHidden={false}

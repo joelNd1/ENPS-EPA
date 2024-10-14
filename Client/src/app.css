@@ -1,0 +1,29 @@
+/* Import Source Sans Pro from Google Fonts with multiple weights */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
+
+/* PublicoHeadline Font */
+@font-face {
+    font-family: 'PublicoHeadline';
+    src: url('./assets/fonts/PublicoHeadline-Bold.ttc') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    color: #343C3D;
+
+}
+
+/* Set Source Sans Pro (Bold) as the global font */
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: bolder; 
+    color: #343C3D;
+
+
+}
+
+/* Optional: Apply PublicoHeadline to specific elements if needed */
+.publico-text {
+    font-family: 'PublicoHeadline', sans-serif;
+    font-weight: bold;
+    color: #343C3D;
+
+}

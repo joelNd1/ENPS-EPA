@@ -1,8 +1,8 @@
-import { ReactComponent as Cyclist } from '../../assets/Img/Cyclist.svg';
-import PageNavigation from '../molecules/NavigationBlock/Navigation';
-import { TitleBlock } from '../molecules/TitleBlock/TitleBlock';
+import { ReactComponent as Cyclist } from '../../../assets/Img/Cyclist.svg';
+import PageNavigation from '../../molecules/NavigationBlock/Navigation';
+import { TitleBlock } from '../../molecules/TitleBlock/TitleBlock';
 import { useNavigate, useLocation } from 'react-router-dom';
-import * as uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -24,7 +24,7 @@ export default function Title() {
     // Function to handle the Next button click and POST request
     const handleNextClick = async () => {
         // Generate a new unique ID if employeeId doesn't exist
-        const generatedId = employeeId || uuid.v4(); // Use existing employeeId if available, otherwise generate new one
+        const generatedId = employeeId || uuidv4(); // Use existing employeeId if available, otherwise generate new one
 
         try {
           const response = await axios.post('http://localhost:3001/insert', {
