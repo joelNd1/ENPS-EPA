@@ -3,6 +3,9 @@ import axios from 'axios';
 import QuestionBlock from '../../molecules/QuestionBlock/QuestionBlock';
 import Navigation from '../../molecules/NavigationBlock/Navigation';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Header from '../../molecules/Header/Header';
+import ProgressBar from '../../molecules/progressBar/progressBar';
+import { Box } from '@mui/material';
 
 export function Questions() {
   const navigate = useNavigate();
@@ -24,7 +27,7 @@ export function Questions() {
   }[] = [
     {
       key: 'roleGuild.guild',
-      question: 'Which department or guild are you currently in?',
+      question: 'I am in the following department or guild.',
       questionType: 'Multiple Choice',
       options: [
         'Architecture and Design',
@@ -36,62 +39,62 @@ export function Questions() {
     },
     {
       key: 'payBandSeparation.satisfactionWithPay',
-      question: 'How satisfied are you with your pay?',
+      question: 'I am satisfied with my pay.',
       questionType: 'Slider',
       minSliderValue: 1,
       maxSliderValue: 5,
     },
     {
       key: 'payBandSeparation.payReflectsEffort',
-      question: 'Does your pay reflect your effort?',
+      question: 'My pay reflects the effort I put into my work.',
       questionType: 'Slider',
       minSliderValue: 1,
       maxSliderValue: 5,
     },
     {
       key: 'workLifeBalance.workLifeBalanceRating',
-      question: 'How would you rate your overall work/life balance?',
+      question: 'I am satisfied with my overall work/life balance.',
       questionType: 'Slider',
       minSliderValue: 1,
       maxSliderValue: 5,
     },
     {
       key: 'workLifeBalance.companySupportForBalance',
-      question: 'Does the company provide sufficient support for work/life balance?',
+      question: 'The company provides sufficient support for work/life balance.',
       questionType: 'Slider',
       minSliderValue: 1,
       maxSliderValue: 5,
     },
     {
       key: 'workLifeBalance.workloadManagement',
-      question: 'How effectively do you manage your workload?',
+      question: 'I effectively manage my workload.',
       questionType: 'Slider',
       minSliderValue: 1,
       maxSliderValue: 5,
     },
     {
       key: 'workLifeBalance.roleFlexibility',
-      question: 'How flexible is your role in terms of adjusting work hours?',
+      question: 'My role is flexible enough to allow for adjusting my work hours.',
       questionType: 'Slider',
       minSliderValue: 1,
       maxSliderValue: 5,
     },
     {
       key: 'incentives.usesAXAMax',
-      question: 'Do you use AXA Max benefits?',
+      question: 'I use AXA Max benefits.',
       questionType: 'Multiple Choice',
       options: ['Yes', 'No'],
     },
     {
       key: 'careerDevelopment.careerDevelopmentSatisfaction',
-      question: 'How satisfied are you with the career development opportunities provided by the company?',
+      question: 'I am satisfied with the career development opportunities provided by the company.',
       questionType: 'Slider',
       minSliderValue: 1,
       maxSliderValue: 5,
     },
     {
       key: 'careerDevelopment.resourcesForProfessionalGrowth',
-      question: 'Are you satisfied with the resources provided for your professional growth?',
+      question: 'The resources provided by the company support my professional growth.',
       questionType: 'Slider',
       minSliderValue: 1,
       maxSliderValue: 5,
@@ -158,10 +161,15 @@ export function Questions() {
   const isNextButtonDisabled = isSubmitting || !answers[currentQuestion.key];
 
   return (
-    <div style={{ padding: '20px', backgroundColor:'#F0F0F0'
+    
+    <Box>
+      <Header/>
+      <ProgressBar
+        currentStep={currentQuestionIndex + 1} 
+        totalSteps={questions.length}
+      />
 
-    }}>
-      <h1>Survey Page {currentQuestionIndex + 1} of {questions.length}</h1>
+      {/* <h1>Survey Page {currentQuestionIndex + 1} of {questions.length}</h1> */}
 
       {/* Render the current question */}
       <QuestionBlock
@@ -188,7 +196,7 @@ export function Questions() {
         nextButtonClickHandler={handleNextClick}
         backButtonClickHandler={handleBackClick}
       />
-    </div>
+    </Box>
   );
 }
 

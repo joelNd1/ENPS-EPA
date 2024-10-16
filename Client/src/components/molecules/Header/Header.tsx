@@ -1,9 +1,23 @@
-import React from 'react'
+import { ReactComponent as AXAlogo } from '../../../assets/Img/✅ AXA Health.svg';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 
-const ProgressBar = () => {
+const Header = () => {
   return (
-    <div>ProgressBar</div>
-  )
-}
+    <AppBar 
+      position="sticky" 
+      sx={{ backgroundColor: '#FFFFFF', boxShadow: 'none' }}
+      data-testid="AppBar-Header"
+    >
+      <Box 
+        sx={{ padding: '8px', paddingLeft: '90px' }} 
+        data-testid="Box-LogoContainer"
+      >
+        <AXAlogo data-testid="AXAlogo" />
+      </Box>
+    </AppBar>
+  );
+};
 
-export default ProgressBar
+export default Header;

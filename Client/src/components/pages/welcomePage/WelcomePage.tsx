@@ -5,8 +5,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Header from '../../molecules/Header/Header';
 
-export default function Title() {
+export default function WelcomePage() {
     const [employeeId, setEmployeeId] = useState<string>(''); // State for employee ID
     const navigate = useNavigate();
     const location = useLocation();
@@ -64,11 +65,12 @@ export default function Title() {
 
     return (
         <div >
+          <Header/>
             <TitleBlock
                 image={<Cyclist />}
-                title='Lorem ipsum dolor sit amet'
-                description='Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.'
-                testId='Testing-Titles-Page-Block'
+                title='Welcome to the Employee Satisfaction and Engagement Survey'
+                description='Welcome to the Employee Satisfaction Survey! Your feedback is important in helping us improve your experience at the company. This survey will cover key areas like your role, pay, career growth, and work/life balance. It’s anonymous, and your input will guide positive changes across the organisation. Thank you for taking the time to share your thoughts!'
+                testId='Title-Page-Block'
             />
             <PageNavigation
                 isNextButtonDisabled={false} // Disable Next button if submitting

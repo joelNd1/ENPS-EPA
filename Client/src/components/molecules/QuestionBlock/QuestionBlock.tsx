@@ -35,6 +35,7 @@ const marks = [
   },
 ];
 
+
 export default function QuestionBlock({
   question,
   questionType,
@@ -46,12 +47,16 @@ export default function QuestionBlock({
   testId,
 }: QuestionBlockProps) {
   return (
-    <material.Box sx={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
+    <material.Box
+      data-testid={`${testId}-Box`}
+      sx={{ padding: "20px", maxWidth: "600px", margin: "auto" }}
+    >
       {/* Question */}
       <material.Typography
         variant="h1"
         gutterBottom
         textAlign={"center"}
+        data-testid={`${testId}-Question`}
         sx={{ padding: "64px", fontFamily: "PublicoHeadline, sans-serif", fontSize: '36px' }}
       >
         {question}
@@ -59,10 +64,15 @@ export default function QuestionBlock({
 
       {/* Render input based on the question type */}
       {questionType === "Multiple Choice" && (
-        <material.RadioGroup value={answer} onChange={(e) => onAnswerChange(e.target.value)}>
+        <material.RadioGroup
+          value={answer}
+          onChange={(e) => onAnswerChange(e.target.value)}
+          data-testid={`${testId}-RadioGroup`}
+        >
           {options.map((option, index) => (
             <material.Box
               key={index}
+              data-testid={`${testId}-Option-${index}`}
               sx={{
                 marginBottom: "10px",
                 border: "1px solid #757575",
@@ -76,6 +86,7 @@ export default function QuestionBlock({
                 control={<material.Radio />}
                 label={option}
                 labelPlacement="end"
+                data-testid={`${testId}-RadioOption-${index}`}
                 sx={{
                   "& .MuiFormControlLabel-label": {
                     fontFamily: "Source Sans Pro, PublicoHeadline",
@@ -100,6 +111,7 @@ export default function QuestionBlock({
             marks={marks}
             onChange={(e, value) => onAnswerChange(value as number)}
             valueLabelDisplay="auto"
+            data-testid={`${testId}-Slider`}
             sx={{
               width: "100%",
               color: "#343C3D",
@@ -116,9 +128,9 @@ export default function QuestionBlock({
           />
           <material.Typography
             variant="body2"
+            data-testid={`${testId}-SliderValue`}
             sx={{ marginTop: "10px", fontFamily: "PublicoHeadline, sans-serif" }}
           >
-            {answer}
           </material.Typography>
         </material.Box>
       )}

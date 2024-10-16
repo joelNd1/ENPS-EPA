@@ -29,12 +29,13 @@ export default function Navigation({
       data-testid="Page-Navigation"
       sx={{
         display: "flex",
-        justifyContent: isBackButtonHidden ? "flex-end" : "space-between",
+        justifyContent: isBackButtonHidden ? "center" : "space-between",
         margin: wrapperMarginDisabled ? "0" : "20px 0",
         width: "100%",
         maxWidth: "600px",
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
+        paddingBottom:'20px'
       }}
     >
       {/* Conditionally render the Back button */}
@@ -51,10 +52,9 @@ export default function Navigation({
             '&:hover': {
               borderColor: "#3A5E94",
             },
-            textTransform: "none", // Ensure the button text remains in sentence case
+            textTransform: "none",
             padding: "10px 20px",
             fontFamily: 'Source sans Pro, sans-serif', 
-
           }}
         >
           {backButtonText}
