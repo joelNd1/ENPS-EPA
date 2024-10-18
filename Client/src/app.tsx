@@ -9,9 +9,10 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         {/* Route for the functiional testing */}
-        <Route path="*" element={<WelcomePage />} />
-        <Route path="/Questions" element={<Questions />} />
-        <Route path="/thank-you" element={<ThankYouPage/>} />
+        <Route path='*' element={<WelcomePage />} />
+        <Route path='/welcome' element={<WelcomePage />} />
+        <Route path='/Questions' element={<Questions />} />
+        <Route path='/thank-you' element={<ThankYouPage/>} />
 
       </Routes>
     </Router>

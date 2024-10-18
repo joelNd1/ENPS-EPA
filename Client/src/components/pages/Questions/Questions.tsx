@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../molecules/Header/Header';
 import ProgressBar from '../../molecules/progressBar/progressBar';
 import { Box } from '@mui/material';
+import { Console } from 'console';
 
 export function Questions() {
   const navigate = useNavigate();
@@ -105,12 +106,12 @@ export function Questions() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const idFromURL = params.get('employeeId');
-
+    console.log(params)
     if (idFromURL) {
       setEmployeeId(idFromURL); // Set employeeId from URL
-      console.log("Employee ID:", idFromURL);
+      console.log('Employee ID:', idFromURL);
     } else {
-      console.error("Employee ID not found in URL");
+      console.error('Employee ID not found in URL');
     }
   }, [location]);
 
@@ -150,7 +151,7 @@ export function Questions() {
       // Navigate to a thank you or confirmation page
       navigate(`/thank-you`);
     } catch (error) {
-      console.error('Error updating survey responses:', error);
+      console.error('Error updating survey responses:', employeeId + error);
     } finally {
       setIsSubmitting(false);
     }
@@ -169,8 +170,6 @@ export function Questions() {
         totalSteps={questions.length}
       />
 
-      {/* <h1>Survey Page {currentQuestionIndex + 1} of {questions.length}</h1> */}
-
       {/* Render the current question */}
       <QuestionBlock
         question={currentQuestion.question}
@@ -180,7 +179,7 @@ export function Questions() {
         maxSliderValue={currentQuestion.maxSliderValue}
         answer={answers[currentQuestion.key]}
         onAnswerChange={(value) => handleAnswerChange(currentQuestion.key, value)}
-        testId={`question-${currentQuestionIndex}`}
+        testId={`question-${currentQuestionIndex+1}`}
       />
 
       {/* Display the employee ID

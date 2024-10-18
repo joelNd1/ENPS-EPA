@@ -1,8 +1,8 @@
-import * as material from "@mui/material";
+import * as material from '@mui/material';
 
 export type QuestionBlockProps = {
   question: string;
-  questionType: "Multiple Choice" | "Slider";
+  questionType: 'Multiple Choice' | 'Slider';
   options?: string[];
   minSliderValue?: number;
   maxSliderValue?: number;
@@ -49,21 +49,21 @@ export default function QuestionBlock({
   return (
     <material.Box
       data-testid={`${testId}-Box`}
-      sx={{ padding: "20px", maxWidth: "600px", margin: "auto" }}
+      sx={{ padding: '20px', maxWidth: '600px', margin: 'auto' }}
     >
       {/* Question */}
       <material.Typography
-        variant="h1"
+        variant='h1'
         gutterBottom
-        textAlign={"center"}
+        textAlign={'center'}
         data-testid={`${testId}-Question`}
-        sx={{ padding: "64px", fontFamily: "PublicoHeadline, sans-serif", fontSize: '36px' }}
+        sx={{ padding: '64px', fontFamily: 'PublicoHeadline, sans-serif', fontSize: '36px' }}
       >
         {question}
       </material.Typography>
 
       {/* Render input based on the question type */}
-      {questionType === "Multiple Choice" && (
+      {questionType === 'Multiple Choice' && (
         <material.RadioGroup
           value={answer}
           onChange={(e) => onAnswerChange(e.target.value)}
@@ -74,10 +74,10 @@ export default function QuestionBlock({
               key={index}
               data-testid={`${testId}-Option-${index}`}
               sx={{
-                marginBottom: "10px",
-                border: "1px solid #757575",
-                borderRadius: "6px",
-                padding: "24px",
+                marginBottom: '10px',
+                border: '1px solid #757575',
+                borderRadius: '6px',
+                padding: '24px',
                 backgroundColor: '#ffffff',
               }}
             >
@@ -85,11 +85,11 @@ export default function QuestionBlock({
                 value={option}
                 control={<material.Radio />}
                 label={option}
-                labelPlacement="end"
+                labelPlacement='end'
                 data-testid={`${testId}-RadioOption-${index}`}
                 sx={{
-                  "& .MuiFormControlLabel-label": {
-                    fontFamily: "Source Sans Pro, PublicoHeadline",
+                  '& .MuiFormControlLabel-label': {
+                    fontFamily: 'Source Sans Pro, PublicoHeadline',
                     fontWeight: 'bold',
                     fontSize: '18px',
                   },
@@ -100,36 +100,36 @@ export default function QuestionBlock({
         </material.RadioGroup>
       )}
 
-      {questionType === "Slider" && (
-        <material.Box sx={{ marginTop: "20px" }}>
+      {questionType === 'Slider' && (
+        <material.Box sx={{ marginTop: '20px' }}>
           <material.Slider
             value={answer as number}
-            aria-label="Likert Scale"
+            aria-label='Likert Scale'
             defaultValue={3}
             min={minSliderValue}
             max={maxSliderValue}
             marks={marks}
             onChange={(e, value) => onAnswerChange(value as number)}
-            valueLabelDisplay="auto"
+            valueLabelDisplay='auto'
             data-testid={`${testId}-Slider`}
             sx={{
-              width: "100%",
-              color: "#343C3D",
-              "& .MuiSlider-thumb": {
-                backgroundColor: "#343C3D",
+              width: '100%',
+              color: '#343C3D',
+              '& .MuiSlider-thumb': {
+                backgroundColor: '#343C3D',
               },
-              "& .MuiSlider-track": {
-                backgroundColor: "#343C3D",
+              '& .MuiSlider-track': {
+                backgroundColor: '#343C3D',
               },
-              "& .MuiSlider-rail": {
-                backgroundColor: "#343C3D",
+              '& .MuiSlider-rail': {
+                backgroundColor: '#343C3D',
               },
             }}
           />
           <material.Typography
-            variant="body2"
+            variant='body2'
             data-testid={`${testId}-SliderValue`}
-            sx={{ marginTop: "10px", fontFamily: "PublicoHeadline, sans-serif" }}
+            sx={{ marginTop: '10px', fontFamily: 'PublicoHeadline, sans-serif' }}
           >
           </material.Typography>
         </material.Box>

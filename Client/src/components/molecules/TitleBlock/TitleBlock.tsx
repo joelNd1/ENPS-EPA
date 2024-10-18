@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { Box, Typography } from "@mui/material";
+import React, { ReactNode } from 'react';
+import { Box, Typography } from '@mui/material';
 
 
 export type TitleBlockProps = {
@@ -12,33 +12,33 @@ export type TitleBlockProps = {
 export function TitleBlock({
   image,
   title,
-  description = "",
+  description = '',
   testId,
 }: TitleBlockProps) {
   return (
     <Box
       data-testid={testId}
       sx={{
-        textAlign: "center",
-        paddingLeft: "100px",
-        paddingRight: "100px",
+        textAlign: 'center',
+        paddingLeft: '100px',
+        paddingRight: '100px',
 
-        backgroundColor: "#F0F0F0",
-        borderRadius: "10px",
-        margin: "auto",
+        backgroundColor: '#F0F0F0',
+        borderRadius: '10px',
+        margin: 'auto',
       }}
     >
       {/* Image Section */}
-      <Box sx={{ marginBottom: "20px"}}>{image}</Box>
+      <Box data-testId='title-page-image' sx={{ marginBottom: '20px'}}>{image}</Box>
 
       {/* Title Section */}
       <Typography
-        variant="h4"
-        component="h1"
+        variant='h4'
+        component='h1'
         sx={{
-          fontFamily: "PublicoHeadline, sans-serif",
-          fontWeight: "bold",
-          marginBottom: "16px",
+          fontFamily: 'PublicoHeadline, sans-serif',
+          fontWeight: 'bold',
+          marginBottom: '16px',
         }}
       >
         {title}
@@ -46,10 +46,12 @@ export function TitleBlock({
 
       {/* Description Section */}
       <Typography
-        variant="body1"
+        variant='h4'
+        data-testId='TitleBlock-description'
         sx={{
-          fontFamily: "Source Sans Pro, sans-serif",
-          color: "#343C3D",
+          fontSize:'20px',
+          fontFamily: 'Source Sans Pro, sans-serif',
+          color: '#343C3D',
         }}
       >
         {description}

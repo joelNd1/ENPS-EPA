@@ -1,5 +1,5 @@
-import React from "react";
-import { LinearProgress, Box, } from "@mui/material";
+import React from 'react';
+import { LinearProgress, Box, } from '@mui/material';
 
 type ProgressBarProps = {
   currentStep: number;
@@ -10,16 +10,17 @@ export default function ProgressBar({ currentStep, totalSteps }: ProgressBarProp
   const progress = (currentStep / totalSteps) * 100;
 
   return (
-    <Box sx={{ width: "100%", marginBottom: "20px" }}>
+    <Box sx={{ width: '100%', marginBottom: '20px' }}>
       <LinearProgress
-        variant="determinate"
+        data-testId='progress-bar'
+        variant='determinate'
         value={progress}
         sx={{
           height: '8px',
-          "& .MuiLinearProgress-bar": {
-            backgroundColor: "#00ADC6",
+          '& .MuiLinearProgress-bar': {
+            backgroundColor: '#00ADC6',
           },
-          backgroundColor: "#E5E5E5",
+          backgroundColor: '#E5E5E5',
         }}
       />
     </Box>

@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from '../../molecules/Header/Header';
+import { Box } from '@mui/material';
 
 export default function WelcomePage() {
     const [employeeId, setEmployeeId] = useState<string>(''); // State for employee ID
@@ -64,19 +65,19 @@ export default function WelcomePage() {
       };
 
     return (
-        <div >
+        <Box >
           <Header/>
             <TitleBlock
                 image={<Cyclist />}
                 title='Welcome to the Employee Satisfaction and Engagement Survey'
                 description='Welcome to the Employee Satisfaction Survey! Your feedback is important in helping us improve your experience at the company. This survey will cover key areas like your role, pay, career growth, and work/life balance. It’s anonymous, and your input will guide positive changes across the organisation. Thank you for taking the time to share your thoughts!'
-                testId='Title-Page-Block'
+                testId='welcome-Page-Block'
             />
             <PageNavigation
                 isNextButtonDisabled={false} // Disable Next button if submitting
                 isBackButtonHidden={true}
-                nextButtonClickHandler={handleNextClick}
+                nextButtonClickHandler={handleNextClick}                
             />
-        </div>
+        </Box>
     );
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Box } from "@mui/material";
+import React from 'react';
+import { Button, Box } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -21,39 +21,38 @@ export default function Navigation({
   backButtonClickHandler,
   nextButtonClickHandler,
   wrapperMarginDisabled = false,
-  nextButtonText = "Next",
-  backButtonText = "Back",
+  nextButtonText = 'Next',
+  backButtonText = 'Back',
 }: NavigationProps) {
   return (
     <Box
-      data-testid="Page-Navigation"
+      data-testid='Page-Navigation'
       sx={{
-        display: "flex",
-        justifyContent: isBackButtonHidden ? "center" : "space-between",
-        margin: wrapperMarginDisabled ? "0" : "20px 0",
-        width: "100%",
-        maxWidth: "600px",
-        marginLeft: "auto",
-        marginRight: "auto",
+        display: 'flex',
+        justifyContent: isBackButtonHidden ? 'center' : 'space-between',
+        margin: wrapperMarginDisabled ? '0' : '20px 0',
+        width: '100%',
+        maxWidth: '600px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
         paddingBottom:'20px'
       }}
     >
       {/* Conditionally render the Back button */}
       {!isBackButtonHidden && (
         <Button
-          data-testid="Back-Button"
-          variant="outlined"
+          variant='outlined'
           disabled={isBackButtonDisabled}
           onClick={backButtonClickHandler}
           startIcon={<ArrowBackIosIcon />}
           sx={{
-            color: isBackButtonDisabled ? "#ccc" : "#3A5E94",
-            borderColor: isBackButtonDisabled ? "#ccc" : "#3A5E94",
+            color: isBackButtonDisabled ? '#ccc' : '#3A5E94',
+            borderColor: isBackButtonDisabled ? '#ccc' : '#3A5E94',
             '&:hover': {
-              borderColor: "#3A5E94",
+              borderColor: '#3A5E94',
             },
-            textTransform: "none",
-            padding: "10px 20px",
+            textTransform: 'none',
+            padding: '10px 20px',
             fontFamily: 'Source sans Pro, sans-serif', 
           }}
         >
@@ -63,18 +62,17 @@ export default function Navigation({
 
       {/* Render the Next button */}
       <Button
-        data-testid="Next-Button"
-        variant="contained"
+        variant='contained'
         disabled={isNextButtonDisabled}
         onClick={nextButtonClickHandler}
         endIcon={<ArrowForwardIosIcon />}
         sx={{
-          backgroundColor: isNextButtonDisabled ? "#ccc" : "#B03C1D",
-          color: "#fff",
-          textTransform: "none",
-          padding: "10px 20px",
+          backgroundColor: isNextButtonDisabled ? '#ccc' : '#B03C1D',
+          color: '#fff',
+          textTransform: 'none',
+          padding: '10px 20px',
           '&:hover': {
-            backgroundColor: "#B03C1D",
+            backgroundColor: '#B03C1D',
           },
           fontFamily: 'Source sans Pro, sans-serif', 
         }}
