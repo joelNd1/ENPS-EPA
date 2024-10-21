@@ -49,34 +49,34 @@ app.post("/insert", async (req, res) => {
     }
 });
 
-// READ - Fetch all survey responses
-app.get("/read", async (req, res) => {
-    try {
-        const surveyResponses = await SurveyResponse.find();
-        res.send(surveyResponses);
-    } catch (err) {
-        console.error('Error fetching survey responses:', err);
-        res.status(500).send("Error fetching survey responses");
-    }
-});
+// // READ - Fetch all survey responses
+// app.get("/read", async (req, res) => {
+//     try {
+//         const surveyResponses = await SurveyResponse.find();
+//         res.send(surveyResponses);
+//     } catch (err) {
+//         console.error('Error fetching survey responses:', err);
+//         res.status(500).send("Error fetching survey responses");
+//     }
+// });
 
 // READ - Fetch a specific survey response by employeeId
-app.get("/read/:employeeId", async (req, res) => {
-    const { employeeId } = req.params;
 
-    try {
-        const surveyResponse = await SurveyResponse.findOne({ employeeId });
-        if (!surveyResponse) {
-            return res.status(404).send("Survey response not found");
-        }
-        res.send(surveyResponse);
-    } catch (err) {
-        console.error('Error fetching survey response:', err);
-        res.status(500).send("Error fetching survey response");
-    }
-});
+// app.get("/read/:employeeId", async (req, res) => {
+//     const { employeeId } = req.params;
 
-// UPDATE - Update an existing survey response by _id
+//     try {
+//         const surveyResponse = await SurveyResponse.findOne({ employeeId });
+//         if (!surveyResponse) {
+//             return res.status(404).send("Survey response not found");
+//         }
+//         res.send(surveyResponse);
+//     } catch (err) {
+//         console.error('Error fetching survey response:', err);
+//         res.status(500).send("Error fetching survey response");
+//     }
+// });
+
 app.put('/update/:employeeId', async (req, res) => {
     const { employeeId } = req.params; // Extract employeeId from the URL
     const updateFields = req.body; // Extract the fields to update from the request body
@@ -105,23 +105,24 @@ app.put('/update/:employeeId', async (req, res) => {
   });
   
 
-// DELETE - Remove a survey response by ID
-app.delete("/delete/:id", async (req, res) => {
-    const { id } = req.params;
+// // DELETE - Remove a survey response by ID
+// app.delete("/delete/:id", async (req, res) => {
+//     const { id } = req.params;
 
-    try {
-        const deletedResponse = await SurveyResponse.findByIdAndRemove(id);
-        if (!deletedResponse) {
-            return res.status(404).send("Survey response not found");
-        }
-        res.send("Survey response deleted successfully");
-    } catch (err) {
-        console.error('Error deleting survey response:', err);
-        res.status(500).send("Error deleting survey response");
-    }
-});
+//     try {
+//         const deletedResponse = await SurveyResponse.findByIdAndRemove(id);
+//         if (!deletedResponse) {
+//             return res.status(404).send("Survey response not found");
+//         }
+//         res.send("Survey response deleted successfully");
+//     } catch (err) {
+//         console.error('Error deleting survey response:', err);
+//         res.status(500).send("Error deleting survey response");
+//     }
+// });
 
 // Start the server
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}...`);

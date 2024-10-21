@@ -6,7 +6,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../molecules/Header/Header';
 import ProgressBar from '../../molecules/progressBar/progressBar';
 import { Box } from '@mui/material';
-import { Console } from 'console';
 
 export function Questions() {
   const navigate = useNavigate();
@@ -106,7 +105,6 @@ export function Questions() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const idFromURL = params.get('employeeId');
-    console.log(params)
     if (idFromURL) {
       setEmployeeId(idFromURL); // Set employeeId from URL
       console.log('Employee ID:', idFromURL);
@@ -151,7 +149,7 @@ export function Questions() {
       // Navigate to a thank you or confirmation page
       navigate(`/thank-you`);
     } catch (error) {
-      console.error('Error updating survey responses:', employeeId + error);
+      console.error('Error updating survey responses:', error);
     } finally {
       setIsSubmitting(false);
     }
