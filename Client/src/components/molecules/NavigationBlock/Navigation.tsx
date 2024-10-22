@@ -31,21 +31,32 @@ export default function Navigation({
         display: 'flex',
         justifyContent: isBackButtonHidden ? 'center' : 'space-between',
         margin: wrapperMarginDisabled ? '0' : '20px 0',
+        width: '100%',
         maxWidth: '600px',
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingBottom:'20px'
       }}
     >
-      {/* Conditionally render the Back button if not hidden */}
+      {/* Conditionally render the Back button */}
       {!isBackButtonHidden && (
         <Button
           variant='outlined'
           disabled={isBackButtonDisabled}
           onClick={backButtonClickHandler}
-          startIcon={<ArrowBackIosIcon />} // Back arrow icon
+          startIcon={<ArrowBackIosIcon />}
+          sx={{
+            color: isBackButtonDisabled ? '#ccc' : '#3A5E94',
+            borderColor: isBackButtonDisabled ? '#ccc' : '#3A5E94',
+            '&:hover': {
+              borderColor: '#3A5E94',
+            },
+            textTransform: 'none',
+            padding: '10px 20px',
+            fontFamily: 'Source sans Pro, sans-serif', 
+          }}
         >
-          {backButtonText} {/* Back button label */}
+          {backButtonText}
         </Button>
       )}
 
@@ -54,9 +65,19 @@ export default function Navigation({
         variant='contained'
         disabled={isNextButtonDisabled}
         onClick={nextButtonClickHandler}
-        endIcon={<ArrowForwardIosIcon />} // Forward arrow icon
+        endIcon={<ArrowForwardIosIcon />}
+        sx={{
+          backgroundColor: isNextButtonDisabled ? '#ccc' : '#B03C1D',
+          color: '#fff',
+          textTransform: 'none',
+          padding: '10px 20px',
+          '&:hover': {
+            backgroundColor: '#B03C1D',
+          },
+          fontFamily: 'Source sans Pro, sans-serif', 
+        }}
       >
-        {nextButtonText} {/* Next button label */}
+        {nextButtonText}
       </Button>
     </Box>
   );
