@@ -21,6 +21,8 @@ export default function ProgressBar({ currentStep, totalSteps }: ProgressBarProp
           '& .MuiLinearProgress-bar': {
             backgroundColor: '#00ADC6', // Custom color for progress
           },
+          backgroundColor: '#E5E5E5',
+
         }}
       />
     </Box>
